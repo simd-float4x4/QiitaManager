@@ -24,6 +24,29 @@ jobs:
           SLACK_TITLE: "Deploy / Success"
           SLACK_COLOR: good
           SLACK_MESSAGE: "デプロイが完了しました🚀"
+        with:
+          attachments: |
+              [
+                {
+                  "color": "good",
+                  "author_name": "${{ github.actor }}",
+                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "fields": [
+                    {
+                      "title": "Commit Message",
+                      "value": "${{ env.COMMIT_MESSAGE }}"
+                    },
+                    {
+                      "title": "GitHub Actions URL",
+                      "value": "${{ github.event.repository.url }}/actions/runs/${{ github.run_id }}"
+                    },
+                    {
+                      "title": "Compare URL",
+                      "value": "${{ github.event.compare }}"
+                    }
+                  ]
+                }
+              ]
 
       # -- Slack通知（失敗） --
       - name: Notify Slack on Failure
